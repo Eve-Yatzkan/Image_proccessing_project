@@ -1,0 +1,10 @@
+metric,value
+num_images,100.0
+configured_max_features,1500.0
+mean_keypoints,1336.09
+std_keypoints,246.45663027409228
+median_keypoints,1441.0
+min_keypoints,344.0
+max_keypoints,1500.0
+images_at_feature_limit,18.0
+images_without_descriptors,0.0

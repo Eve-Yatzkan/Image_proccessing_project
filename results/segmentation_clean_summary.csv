@@ -1,0 +1,2 @@
+num_images,mean_per_image_miou_all_classes,mean_per_image_miou_foreground,dataset_miou_all_classes,dataset_miou_foreground
+100,0.7688865168092359,0.7003712973895208,0.7843608007001388,0.7770085153966566

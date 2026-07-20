@@ -1,0 +1,2 @@
+num_images,total_ground_truth_objects,total_difficult_objects_ignored,total_predictions,total_true_positives,total_false_positives,total_false_negatives,mean_per_image_precision,mean_per_image_recall,mean_per_image_f1,global_precision,global_recall,global_f1,global_mean_matched_iou,confidence_threshold,iou_threshold
+100,245,47,304,198,106,47,0.7836428571428571,0.882452380952381,0.8033220439691029,0.6513157894736842,0.8081632653061225,0.7213114754098361,0.8711622684890471,0.25,0.5
