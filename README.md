@@ -113,11 +113,18 @@ To test if classical image processing can recover model performance, we applied 
 
 ```text
 PASCAL VOC 2012
--> Fixed 100-image subset
--> Clean baseline
--> Distortion generation
--> Robustness evaluation
--> Image enhancement and final comparison (planned)
+↓
+Clean Baseline
+↓
+Distortions
+↓
+Robustness Evaluation
+↓
+Image Enhancement
+↓
+Fine-Tuning
+↓
+Final Comparison
 ```
 
 ## Current Results
@@ -229,7 +236,8 @@ Run the notebooks in order:
 01_dataset_exploration.ipynb
 02_clean_baseline.ipynb
 03_distortions.ipynb
-04_image_enhancement.ipynb (planned)
+04_image_enhancement.ipynb
+05_fine_tuning.ipynb
 ```
 
 The notebooks use repository-relative paths. PASCAL VOC 2012 is downloaded or loaded through `torchvision` according to the notebook configuration. Outputs are saved to `results/` and `figures/`.
