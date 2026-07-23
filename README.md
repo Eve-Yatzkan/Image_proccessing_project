@@ -158,6 +158,19 @@ PASCAL VOC 2012
 
 ![Detection global F1 under distortions](figures/detection_global_f1_distortions.png)
 
+![Image Restoration Examples - Clean, Distorted, Restored](figures/restoration_examples.png)
+
+![ORB Matching - Distorted vs Enhanced](figures/orb_enhanced.png)
+
+![YOLO Detection - Distorted vs Enhanced](figures/yolo_enhanced.png)
+
+![DeepLab Segmentation - Distorted vs Enhanced](figures/segmentation_enhanced.png)
+
+![YOLO Fine-Tuning on Severe JPEG](figures/yolo_fine_tuning.png)
+
+![YOLO SNR Sweep - Low Light Degradation](figures/yolo_snr_sweep.png)
+
+
 ## Repository Structure
 
 ```text
@@ -169,6 +182,8 @@ PASCAL VOC 2012
 |   +-- 01_dataset_exploration.ipynb
 |   +-- 02_clean_baseline.ipynb
 |   +-- 03_distortions.ipynb
+|   +-- 04_image_enhancement.ipynb
+|   +-- 05_fine_tuning.ipynb
 +-- results/                                # generated CSV summaries and detailed evaluations
 +-- figures/                                # generated visual examples and performance plots
 ```
@@ -186,6 +201,13 @@ Runs clean-image baselines for ORB, DeepLabV3-ResNet50, and YOLO11n. It saves pe
 ### `03_distortions.ipynb`
 
 Defines the three distortions, computes SNR, evaluates all three tasks under every distortion-severity combination, and saves robustness summaries and plots.
+
+### `04_image_enhancement.ipynb`
+Applies classical image processing filters (NLM, Bilateral, CLAHE) to the distorted images and evaluates the performance recovery of ORB, DeepLabV3, and YOLO compared to the distorted baseline.
+
+### `05_fine_tuning.ipynb`
+Demonstrates model recovery through deep learning by generating pseudo-labels from clean images, fine-tuning YOLO on severe JPEG distortions, and performing a gradual SNR degradation sweep for low-light conditions.
+
 
 ## Installation
 
@@ -227,16 +249,15 @@ The notebooks use repository-relative paths. PASCAL VOC 2012 is downloaded or lo
 - [x] Clean baseline evaluation
 - [x] Distortion generation
 - [x] Robustness evaluation
-- [ ] Image enhancement
-- [ ] Evaluation after enhancement
-- [ ] Fine-tuning, if required
-- [ ] Final comparison and reporting
+- [x] Image enhancement
+- [x] Evaluation after enhancement
+- [x] Fine-tuning, if required
+- [x] Final comparison and reporting
+
 
 ## Limitations
 
 - Evaluation uses a fixed subset of 100 images.
-- The deep models are pretrained and have not yet been fine-tuned.
-- Image enhancement has not yet been implemented.
 - Results are specific to the selected distortions and severity levels.
 
 ## References
