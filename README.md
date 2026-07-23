@@ -6,7 +6,7 @@ Image Processing Course Project
 
 This project evaluates the robustness of computer vision methods under controlled image distortions. It uses the PASCAL VOC 2012 `train` split and compares one classical method, ORB feature detection and matching, with two pretrained deep learning models: DeepLabV3-ResNet50 for semantic segmentation and YOLO11n for object detection.
 
-The current implementation includes dataset exploration, clean baseline evaluation, distortion generation, and robustness analysis. Image enhancement is the next planned stage, followed by a comparison of clean, distorted, and enhanced performance.
+The implementation includes dataset exploration, clean baseline evaluation, distortion generation, robustness analysis, and an image enhancement stage. Finally, we performed fine-tuning and a gradual Signal-to-Noise Ratio (SNR) sweep to thoroughly evaluate the models' limits.
 
 ## Table of Contents
 
@@ -101,6 +101,14 @@ SNR is computed in dB as `10 * log10(signal_power / error_power)`, using the cle
 
 The distortion configuration is saved to `results/distortion_config.csv`.
 
+## Image Enhancements & Restoration
+
+To test if classical image processing can recover model performance, we applied specific enhancements to the severely distorted images:
+- **Gaussian Noise:** Non-Local Means (NLM) denoising combined with a Bilateral Filter to smooth grain while preserving edges.
+- **Severe JPEG:** Aggressive Bilateral Filtering to smooth out harsh block artifacts while keeping object boundaries intact.
+- **Low Light:** Gamma correction followed by CLAHE (Contrast Limited Adaptive Histogram Equalization) in the LAB color space to stretch local contrast.
+
+
 ## Evaluation Pipeline
 
 ```text
@@ -128,6 +136,15 @@ PASCAL VOC 2012
 - Severe JPEG compression produces the strongest degradation for segmentation and detection, with foreground mIoU `0.174` and detection F1 `0.145`.
 - Low light sharply reduces the absolute number of ORB matches. At severe low light, ORB keeps a normalized match ratio of `0.813`, but mean good matches drop to `62.83`.
 - YOLO is comparatively robust to the tested low-light range: detection F1 is `0.729`, `0.714`, and `0.686` for mild, medium, and severe low light.
+
+### Enhancement, Fine-Tuning, and SNR Findings
+
+- **The Paradox of Denoising:** Applying classical denoising and smoothing (NLM + Bilateral) to Gaussian noise actually *hurt* ORB matching and DeepLabV3 segmentation. While visually pleasing to the human eye, smoothing destroys the sharp edges and gradients that ORB relies on, and blurs the precise pixel boundaries needed for semantic segmentation.
+- **JPEG Artifacts & YOLO:** YOLO completely failed on severe JPEG compression (recall dropped to 6.9%). However, smoothing the block artifacts with an aggressive Bilateral filter boosted recall to 31.6%.
+- **Low Light Resilience:** Deep learning models (YOLO and DeepLab) showed natural resilience to low light. Enhancing the images with CLAHE further improved their performance, pushing YOLO detection recall from 69.6% to 80.9%.
+- **Fine-Tuning Success:** Fine-tuning YOLO on pseudo-labeled severely compressed JPEG images yielded a massive improvement, jumping from a baseline detection recall of 7.1% to 33.4% on distorted images. 
+- **SNR "Cliff" Effect:** A gradual SNR sweep on low-light distortions revealed a non-linear degradation in YOLO's performance. The model maintained strong robustness until a brightness factor of `-0.6` (SNR ~1.4 dB), after which performance dropped off a cliff, crashing from 40.4% recall to 3.8% at `-0.9`.
+
 
 ## Visual Results
 
